@@ -65,19 +65,25 @@ const PostLoginSchema = Joi.object({
 });
 
 router.post('/auth', async (req, res, next) => {
-  const { email, password } = await PostLoginSchema.validateAsync(req.body);
+  try {
+    const { email, password } = await PostLoginSchema.validateAsync(req.body);
 
-  const user = await User.findOne({ email, password }).exec(); // email과 password 둘다 일치하는게 있는지 확인하는것
+    const user = await User.findOne({ email, password }).exec(); // email과 password 둘다 일치하는게 있는지 확인하는것
 
-  if (!user) {
-    res
-      .status(400)
-      .json({ errorMessage: '이메일 또는 패스워드가 잘못됐습니다' });
-    return;
+    if (!user) {
+      res
+        .status(400)
+        .json({ errorMessage: '이메일 또는 패스워드가 잘못됐습니다' });
+      return;
+    }
+
+    const token = jwt.sign({ userID: user.userId }, 'my-secret-key');
+    res.json({ token });
+  } catch (error) {
+    res.status(400).send({
+      errorMessage: '요청한 데이터형식이 올바르지 않습니다.',
+    });
   }
-
-  const token = jwt.sign({ userID: user.userId }, 'my-secret-key');
-  res.json({ token });
 });
 
 router.get('/users/me', authMiddleware, async (req, res, next) => {
