@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const { User } = require('../models/index');
+const { Op } = require('sequelize');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -15,8 +16,8 @@ module.exports = (req, res, next) => {
     // { userID: '6351611f8ffbfd72e92aeb47', iat: 1666281033 } 이런식으로 나와서 디스트럭처링 또 가능함
     const { userId } = jwt.verify(tokenValue, 'my-secret-key');
 
-    User.findOne(userId) // async사요잉 아니어서 promies then()을 사용한 것임 exec()때문에!!
-      .exec()
+    User.findByPk(userId) // async사요잉 아니어서 promies then()을 사용한 것임 exec()때문에!!
+
       .then((user) => {
         res.locals.user = user;
         next();
