@@ -5,7 +5,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.25.3"
+    "sequelize": "^6.25.3",
+    "socket.io": "^4.5.3"
   },
   "devDependencies": {
     "sequelize-cli": "^6.5.2"
