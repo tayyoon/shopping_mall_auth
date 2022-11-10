@@ -49,6 +49,7 @@ io.on('connection', (socket) => {
     console.log('클라이언트가 구매한 데이터', data, new Date());
 
     io.emit('BUY_GOODS', payload); // io는 모든 소캣을 관리해주는 관리자 느낌? 전체를 관리하는 느낌
+    io.emit('CLICK_GOODS', payload); // io는 모든 소캣을 관리해주는 관리자 느낌? 전체를 관리하는 느낌
 
     socket.broadcast.emit('BUY_GOODS', payload); // socket.broadcast.emit는 나를 제외한 모든 사람에게 알림을 보낸다!
   });
