@@ -9,6 +9,11 @@
     "socket.io": "^4.5.3"
   },
   "devDependencies": {
+    "prettier": "^2.7.1",
     "sequelize-cli": "^6.5.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettify": "prettier --write *.js **/*.js"
   }
 }
